@@ -2,9 +2,9 @@
 
 ## Project tasks
 
-- [ ] Shto foto tek profili
-    - [ ] User-i mund te shtoj foto tek profili i tij kur regjistrohet
-    - [ ] User-i mund te perditesoje foton e profilit kur eshte i loguar ne profilin e tij
+- [x] Shto foto tek profili
+    - [x] User-i mund te shtoj foto tek profili i tij kur regjistrohet
+    - [x] User-i mund te perditesoje foton e profilit kur eshte i loguar ne profilin e tij
 
 ---
 
