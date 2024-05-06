@@ -3,7 +3,7 @@ Author: W3layouts
 Author URL: http://w3layouts.com
 -->
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <!-- Required meta tags -->
@@ -96,6 +96,9 @@ Author URL: http://w3layouts.com
                                 </div>
                             </div>
 
+                        </div>
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
+                            <input type="hidden" name="role" value="LECTURER"/>
                         </div>
                         <div class="col-md-3 login-center text-start">
                             <button class="btn btn-style btn-style-3">Register</button>

@@ -171,4 +171,10 @@ public class AdminController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/addLecturer", method = {RequestMethod.GET})
+    public String displayRegisterPage(Model model) {
+        model.addAttribute("person", new Person());
+        return "register.html";
+    }
+
 }
