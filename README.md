@@ -2,13 +2,19 @@
 
 ## Project tasks
 
+---
+
+### Task 1
+
 - [x] Shto foto tek profili
     - [x] User-i mund te shtoj foto tek profili i tij kur regjistrohet
     - [x] User-i mund te perditesoje foton e profilit kur eshte i loguar ne profilin e tij
 
 ---
 
-- [ ] Shtoni nje rol te ri: `LECTURER`.
+### Task 2
+
+- [x] Shtoni nje rol te ri: `LECTURER`.
 - [ ] Pedagogu duhet te logohet edhe tek `Dashboard` duhet t’i
   dalin te _**gjitha kurset**_ per te cilat ai eshte **pergjegjes**.
 - [ ] Per secilin kurs, pedagogu mund te beje
@@ -20,16 +26,20 @@
     - [ ] Pedagogu te kete mundesi edhe te fshije dokumenta.
 - [ ] Gjithahtu pedagoget te mund te shohin ne nje tabele **listen** e gjithe
   **studenteve** qe jane regjistruar ne nje kurs.
-- [ ] Pedagoget duhet te regjistrohen nga administratori.
-    - _**Eshte administratori qe percakton cili pedagog eshte pergjegjes per nje kurs te caktuar.**_
+- [x] Pedagoget duhet te regjistrohen nga **_administratori_**.
+- [ ]  _**Eshte administratori qe percakton cili pedagog eshte pergjegjes per nje kurs te caktuar.**_
 
 ---
+
+### Task 3
 
 - [ ] Kur administratori te shtoje nje kurs te kete mundesi te vendose:
     - nje imazh per kursin
     - nje pershkrim te tij _(maksimumi 600 karaktere)._
 
 ---
+
+### Task 4
 
 - Aktualisht, kur shfqet lista e kurseve, dalin gjithmone keto 6 kurse _**statike**_
 - [ ] Ndryshoni implementimin qe te dale lista me gjithe kurset qe ka krijuar admin
@@ -54,6 +64,8 @@
   vleresimi eshte bere, vleresimi shfaqet por nuk mund te editohet)_
 
 ---
+
+### Task 5
 
 - [ ] Administratori te kete nje buton tjeter `Requests`, ku t’i shfaqen gjithe kerkesat e
   studenteve per regjistrime ne kurse ose fshirje regjistrimesh.
