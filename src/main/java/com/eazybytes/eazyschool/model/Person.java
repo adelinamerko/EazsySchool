@@ -11,6 +11,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -86,4 +87,11 @@ public class Person extends BaseEntity{
             inverseJoinColumns = {
                     @JoinColumn(name = "course_id", referencedColumnName = "courseId")})
     private Set<Courses> courses = new HashSet<>();
+
+    @Column(name = "profile_image_path")
+    private String profileImagePath;
+
+    @Transient
+    @JsonIgnore
+    private MultipartFile profileImageFile;
 }
