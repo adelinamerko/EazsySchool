@@ -1,5 +1,6 @@
 package com.eazybytes.eazyschool.model;
 
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -24,4 +25,8 @@ public class Courses extends BaseEntity{
 
     @ManyToMany(mappedBy = "courses", fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
     private Set<Person> persons = new HashSet<>();
+
+    @Size(max = 8)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private Set<CourseMaterial> courseMaterials = new HashSet<>();
 }

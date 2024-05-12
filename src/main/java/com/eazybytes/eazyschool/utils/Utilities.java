@@ -1,6 +1,5 @@
 package com.eazybytes.eazyschool.utils;
 
-import com.eazybytes.eazyschool.constants.EazySchoolConstants;
 import com.eazybytes.eazyschool.model.Person;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;

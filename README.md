@@ -17,13 +17,13 @@
 - [x] Shtoni nje rol te ri: `LECTURER`.
 - [x] Pedagogu duhet te logohet edhe tek `Dashboard` duhet t’i
   dalin te _**gjitha kurset**_ per te cilat ai eshte **pergjegjes**.
-- [ ] Per secilin kurs, pedagogu mund te beje
+- [X] Per secilin kurs, pedagogu mund te beje
   upload te materialeve
     - _(te lejohen vetem dokumenta ne **pdf** edhe me madhesi maksimale
       **10MB**_
-    - [ ] Nese nuk plotesohen keto kushte te dali nje error edhe dokumenti te mos uploadet).
+    - [X] Nese nuk plotesohen keto kushte te dali nje error edhe dokumenti te mos uploadet).
         - _Numri maksimal i dokumentave per nje kurs te jete 8._
-    - [ ] Pedagogu te kete mundesi edhe te fshije dokumenta.
+    - [X] Pedagogu te kete mundesi edhe te fshije dokumenta.
 - [x] Gjithahtu pedagoget te mund te shohin ne nje tabele **listen** e gjithe
   **studenteve** qe jane regjistruar ne nje kurs.
 - [x] Pedagoget duhet te regjistrohen nga **_administratori_**.

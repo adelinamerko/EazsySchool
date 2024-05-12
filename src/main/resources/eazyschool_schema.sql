@@ -96,9 +96,26 @@ CREATE TABLE IF NOT EXISTS `courses` (
 );
 
 CREATE TABLE IF NOT EXISTS `person_courses` (
-  `person_id` int NOT NULL,
-  `course_id` int NOT NULL,
+  `person_id`  int         NOT NULL,
+  `course_id`  int         NOT NULL,
+  `created_at` TIMESTAMP   NOT NULL,
+  `created_by` varchar(50) NOT NULL,
+  `updated_at` TIMESTAMP   DEFAULT NULL,
+  `updated_by` varchar(50) DEFAULT NULL,
   FOREIGN KEY (person_id) REFERENCES person (person_id),
   FOREIGN KEY (course_id) REFERENCES courses (course_id),
   PRIMARY KEY (`person_id`, `course_id`)
+);
+
+DROP TABLE IF EXISTS `course_material`;
+CREATE TABLE `course_material` (
+  `material_id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name`        VARCHAR(255) NOT NULL,
+  `file_path`   VARCHAR(255) NOT NULL,
+  `course_id`   INT,
+  `created_at`  TIMESTAMP    NOT NULL,
+  `created_by`  varchar(50)  NOT NULL,
+  `updated_at`  TIMESTAMP   DEFAULT NULL,
+  `updated_by`  varchar(50) DEFAULT NULL,
+  FOREIGN KEY (course_id) REFERENCES courses (course_id)
 );

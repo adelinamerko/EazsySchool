@@ -43,6 +43,7 @@
                     <th scope="col">Course Name</th>
                     <th scope="col">Fees</th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -53,6 +54,11 @@
                     <td>
                         <a th:href="@{/lecturer/viewStudents(id=${course.courseId})}" class="btn btn-warning">
                             VIEW STUDENTS
+                        </a>
+                    </td>
+                    <td>
+                        <a th:href="@{/lecturer/viewMaterials(id=${course.courseId})}" class="btn btn-warning">
+                            VIEW Materials
                         </a>
                     </td>
                 </tr>
