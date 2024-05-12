@@ -108,19 +108,33 @@ public class AdminController {
     public ModelAndView displayCourses(Model model) {
         //List<Courses> courses = coursesRepository.findByOrderByNameDesc();
         List<Courses> courses = coursesRepository.findAll(Sort.by("name").descending());
+        List<Person> lecturers = personRepository.findByRolesRoleName(Sort.by("name").descending(), "LECTURER");
         ModelAndView modelAndView = new ModelAndView("courses_secure.html");
         modelAndView.addObject("courses",courses);
         modelAndView.addObject("course", new Courses());
+        modelAndView.addObject("lecturers",lecturers);
         return modelAndView;
     }
 
     @PostMapping("/addNewCourse")
-    public ModelAndView addNewCourse(Model model, @ModelAttribute("course") Courses course) {
+    public ModelAndView addNewCourse(@ModelAttribute("course") Courses course, @RequestParam("lecturer") int lecturerId) {
         ModelAndView modelAndView = new ModelAndView();
-        coursesRepository.save(course);
+        // Fetch the lecturer by ID
+        Person lecturer = personRepository.findById(lecturerId).orElse(null);
+        if (lecturer != null) {
+            // Set the lecturer for the course
+            course.getPersons().add(lecturer);
+            // Add the course to the lecturer's set of courses
+            lecturer.getCourses().add(course);
+            // Save both the course and the lecturer
+            coursesRepository.save(course);
+            personRepository.save(lecturer);
+        }
+        // Redirect to the displayCourses page
         modelAndView.setViewName("redirect:/admin/displayCourses");
         return modelAndView;
     }
+
 
     @GetMapping("/viewStudents")
     public ModelAndView viewStudents(Model model, @RequestParam int id

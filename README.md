@@ -27,7 +27,7 @@
 - [ ] Gjithahtu pedagoget te mund te shohin ne nje tabele **listen** e gjithe
   **studenteve** qe jane regjistruar ne nje kurs.
 - [x] Pedagoget duhet te regjistrohen nga **_administratori_**.
-- [ ]  _**Eshte administratori qe percakton cili pedagog eshte pergjegjes per nje kurs te caktuar.**_
+- [x]  _**Eshte administratori qe percakton cili pedagog eshte pergjegjes per nje kurs te caktuar.**_
 
 ---
 

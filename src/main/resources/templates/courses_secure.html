@@ -64,6 +64,11 @@
                                 <label class="control-label" for="fees">Fees</label>
                                 <input type="text" class="form-control" name="fees" id="fees" th:field="*{fees}"
                                        required placeholder="Enter fees">
+                                <label class="control-label" for="lecturer">Lecturer</label>
+                                <label class="control-label" for="lecturer">Lecturer</label>
+                                <select class="form-control" name="lecturer" id="lecturer">
+                                    <option th:each="lecturer: ${lecturers}" th:value="${lecturer.personId}" th:text="${lecturer.name}"></option>
+                                </select>
                             </div>
                         </div>
                         <div class="modal-footer border-top-0 d-flex justify-content-center">
@@ -75,20 +80,29 @@
         </div>
         <table class="table table-striped table-hover">
             <thead class="table-dark">
-            <tr>
-                <th scope="col">Course ID</th>
-                <th scope="col">Course Name</th>
-                <th scope="col">Fees</th>
-                <th scope="col"></th>
-            </tr>
+                <tr>
+                    <th scope="col">Course ID</th>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">Fees</th>
+                    <th scope="col">Lecturer</th>
+                    <th scope="col"></th>
+                </tr>
             </thead>
             <tbody>
-            <tr th:each="course: ${courses}">
-                <td th:text="${course.courseId}"></td>
-                <td th:text="${course.name}"></td>
-                <td th:text="${course.fees}"></td>
-                <td><a th:href="@{/admin/viewStudents(id=${course.courseId})}" class="btn btn-warning">VIEW STUDENTS</a></td>
-            </tr>
+                <tr th:each="course: ${courses}">
+                    <td th:text="${course.courseId}"></td>
+                    <td th:text="${course.name}"></td>
+                    <td th:text="${course.fees}"></td>
+                    <td>
+                        <span th:each="person: ${course.persons}" th:if="${person.roles.roleName == 'LECTURER'}"
+                              th:text="${person.name}"></span>
+                    </td>
+                    <td>
+                        <a th:href="@{/admin/viewStudents(id=${course.courseId})}" class="btn btn-warning">
+                            VIEW STUDENTS
+                        </a>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
