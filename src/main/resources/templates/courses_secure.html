@@ -55,15 +55,24 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form th:action="@{/admin/addNewCourse}" method="post" class="signin-form" th:object="${course}">
+                    <form th:action="@{/admin/addNewCourse}" method="post" class="signin-form" th:object="${course}"
+                          enctype="multipart/form-data">
                         <div class="modal-body">
                             <div class="input-grids">
+                                <label for="courseImage" class="form-label">Course Image:</label>
+                                <input type="file" class="form-control" id="courseImage" name="courseImage"
+                                       accept="image/*">
                                 <label class="control-label" for="courseName">Course Name</label>
                                 <input type="text" class="form-control" name="courseName" id="courseName"
                                        th:field="*{name}" required placeholder="Enter Course Name">
                                 <label class="control-label" for="fees">Fees</label>
                                 <input type="text" class="form-control" name="fees" id="fees" th:field="*{fees}"
                                        required placeholder="Enter fees">
+                                <label class="control-label" for="description">Description</label>
+                                <textarea class="form-control" name="description" id="description"
+                                          th:field="*{description}" required
+                                          placeholder="Enter description" maxlength="600">
+                                </textarea>
                                 <label class="control-label" for="lecturer">Lecturer</label>
                                 <select class="form-control" name="lecturer" id="lecturer">
                                     <option th:each="lecturer: ${lecturers}" th:value="${lecturer.personId}" th:text="${lecturer.name}"></option>

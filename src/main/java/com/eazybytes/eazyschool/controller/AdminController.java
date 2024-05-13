@@ -4,12 +4,14 @@ import com.eazybytes.eazyschool.model.*;
 import com.eazybytes.eazyschool.repository.CoursesRepository;
 import com.eazybytes.eazyschool.repository.EazyClassRepository;
 import com.eazybytes.eazyschool.repository.PersonRepository;
+import com.eazybytes.eazyschool.utils.Utilities;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.servlet.http.HttpSession;
@@ -117,7 +119,7 @@ public class AdminController {
     }
 
     @PostMapping("/addNewCourse")
-    public ModelAndView addNewCourse(@ModelAttribute("course") Courses course, @RequestParam("lecturer") int lecturerId) {
+    public ModelAndView addNewCourse(@ModelAttribute("course") Courses course, @RequestParam("lecturer") int lecturerId, @RequestParam(value = "courseImage", required = false) MultipartFile courseImageFile) {
         ModelAndView modelAndView = new ModelAndView();
         // Fetch the lecturer by ID
         Person lecturer = personRepository.findById(lecturerId).orElse(null);
@@ -126,6 +128,10 @@ public class AdminController {
             course.getPersons().add(lecturer);
             // Add the course to the lecturer's set of courses
             lecturer.getCourses().add(course);
+            if (courseImageFile != null && !courseImageFile.isEmpty()) {
+                String courseImagePath = Utilities.uploadCourseImage(courseImageFile, course);
+                course.setCourseImagePath(courseImagePath);
+            }
             // Save both the course and the lecturer
             coursesRepository.save(course);
             personRepository.save(lecturer);

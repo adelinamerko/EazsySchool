@@ -29,4 +29,12 @@ public class Courses extends BaseEntity{
     @Size(max = 8)
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private Set<CourseMaterial> courseMaterials = new HashSet<>();
+
+    @Column(name = "course_image_path")
+    private String courseImagePath;
+
+    @Column(columnDefinition = "TEXT")
+    @Size(max = 600)
+    private String description;
+
 }
