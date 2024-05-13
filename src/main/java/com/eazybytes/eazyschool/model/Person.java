@@ -91,7 +91,4 @@ public class Person extends BaseEntity{
     @Column(name = "profile_image_path")
     private String profileImagePath;
 
-    @Transient
-    @JsonIgnore
-    private MultipartFile profileImageFile;
 }

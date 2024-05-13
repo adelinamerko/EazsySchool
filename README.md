@@ -33,7 +33,7 @@
 
 ### Task 3
 
-- [ ] Kur administratori te shtoje nje kurs te kete mundesi te vendose:
+- [x] Kur administratori te shtoje nje kurs te kete mundesi te vendose:
     - nje imazh per kursin
     - nje pershkrim te tij _(maksimumi 600 karaktere)._
 

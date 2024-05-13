@@ -95,6 +95,11 @@ CREATE TABLE IF NOT EXISTS `courses` (
   PRIMARY KEY (`course_id`)
 );
 
+ALTER TABLE courses
+  ADD course_image_path VARCHAR(255),
+  ADD description TEXT;
+
+
 CREATE TABLE IF NOT EXISTS `person_courses` (
   `person_id`  int         NOT NULL,
   `course_id`  int         NOT NULL,
