@@ -1,0 +1,106 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 7px;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+.product-img {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-img img {
+    border-radius: 7px 0 0 7px;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.product-info {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 0 7px 7px 0;
+}
+
+.product-text {
+    flex: 1;
+}
+
+.product-text h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: #474747;
+    font-family: 'Bentham', serif;
+}
+
+.product-text h2 {
+    margin-top: 1rem;
+    font-size: 13px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #d2d2d2;
+    letter-spacing: 0.2em;
+}
+
+.product-text p {
+    margin-top: 1rem;
+    font-family: 'Playfair Display', serif;
+    color: #8d8d8d;
+    line-height: 1.7em;
+    font-size: 15px;
+    font-weight: lighter;
+}
+
+.product-price-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.product-price-btn p {
+    margin: 0;
+    font-family: 'Trocchi', serif;
+    font-size: 28px;
+    font-weight: lighter;
+    color: #474747;
+}
+
+.product-price-btn span {
+    font-family: 'Suranna', serif;
+    font-size: 34px;
+}
+
+.product-price-btn button {
+    margin-top: 1rem;
+    padding: 0.5rem 2rem;
+    border: none;
+    border-radius: 60px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #ffffff;
+    background-color: #9cebd5;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+.product-price-btn button:hover {
+    background-color: #79b0a1;
+}

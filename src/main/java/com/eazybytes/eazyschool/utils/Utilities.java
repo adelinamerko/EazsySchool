@@ -69,7 +69,7 @@ public class Utilities {
     }
 
     private static String getRelativeImagePath(String uploadDir, String uniqueFileName) {
-        return uploadDir.replace("./src/main/resources/static/", "") + uniqueFileName;
+        return uploadDir.replace("./src/main/resources/static", "") + uniqueFileName;
     }
 
     private static String generateUniqueFileName(String originalFileName) {
