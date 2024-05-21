@@ -7,6 +7,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 //@RepositoryRestResource(exported = false)
@@ -25,7 +26,12 @@ public interface CoursesRepository extends JpaRepository<Courses, Integer> {
     * */
     List<Courses> findByOrderByName();
 
+    Courses findByCourseId(Integer courseId);
+
     @Query(value = "SELECT c.* FROM courses c INNER JOIN person_courses pc ON c.course_id = pc.course_id WHERE pc.person_id = :personId", nativeQuery = true)
     List<Courses> findAllCoursesForPerson(int personId);
+
+    @Query(value = "SELECT c.* FROM courses c INNER JOIN person_courses pc ON c.course_id = pc.course_id WHERE pc.person_id = :personId AND pc.course_id= :courseId", nativeQuery = true)
+    Courses findCourseForPerson(int personId, int courseId);
 
 }

@@ -48,16 +48,15 @@ Author URL: http://w3layouts.com
                         <li class="alert alert-danger" role="alert" th:each="error : ${#fields.errors('person.*')}"
                             th:text="${error}"/>
                     </ul>
-                    <form th:action="@{/public/createUser}" method="post" class="signin-form" th:object="${person}"
-                          enctype="multipart/form-data">
+                    <form th:action="${#authorization.expression('hasRole(''ROLE_ADMIN'')') ? '/admin/createLecturer' : '/public/createUser'}"
+                          method="post" class="signin-form" th:object="${person}" enctype="multipart/form-data">
                         <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
                             <p class="text-uppercase">Personal Details</p>
                         </div>
                         <div class="input-grids">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <input type="text" th:field="*{name}" placeholder="Name"
-                                           class="contact-input"/>
+                                    <input type="text" th:field="*{name}" placeholder="Name" class="contact-input"/>
                                 </div>
                                 <div class="col-sm-6">
                                     <input type="text" th:field="*{mobileNumber}" placeholder="Mobile Number"
@@ -66,8 +65,7 @@ Author URL: http://w3layouts.com
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <input type="text" th:field="*{email}" placeholder="Email"
-                                           class="contact-input"/>
+                                    <input type="text" th:field="*{email}" placeholder="Email" class="contact-input"/>
                                 </div>
                                 <div class="col-sm-6">
                                     <input type="text" th:field="*{confirmEmail}" placeholder="Confirm Email"
@@ -84,18 +82,15 @@ Author URL: http://w3layouts.com
                                            class="contact-input"/>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-sm-6">
                                     <label class="control-label" for="profileImageFile">Profile Image:</label>
                                 </div>
                                 <div class="col-sm-6">
                                     <input type="file" name="profileImageFile" id="profileImageFile"
-                                           class="contact-input"
-                                           accept="image/*"/>
+                                           class="contact-input" accept="image/*"/>
                                 </div>
                             </div>
-
                         </div>
                         <div sec:authorize="hasRole('ROLE_ADMIN')">
                             <input type="hidden" name="role" value="LECTURER"/>
