@@ -55,8 +55,8 @@ Author URL: http://w3layouts.com
                         <div class="content-main-top">
                             <div class="content-top mb-4 mt-3">
                                 <ul class="list-unstyled d-flex align-items-center justify-content-between">
-                                    <li th:text="${course.courseMaterials.size()}"><i class='fas fa-book-open'></i> Lesson</li>
-                                    <li> <i class="fas fa-star"></i> 4.9</li>
+                                    <li><i class='fas fa-book-open'></i><span th:text=" ${course.courseMaterials.size()}"></span> Lessons</li>
+                                    <li><i class="fas fa-star"></i> <span th:text="${courseRates.get(course.getCourseId())}"></span></li>
                                 </ul>
                             </div>
                             <h4><a th:href="@{'/courses/' + ${course.courseId}}" th:text="${course.name}"></a></h4>

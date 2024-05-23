@@ -102,8 +102,8 @@
                     <td th:text="${course.name}"></td>
                     <td th:text="${course.fees}"></td>
                     <td>
-                        <span th:each="person: ${course.persons}" th:if="${person.roles.roleName == 'LECTURER'}"
-                              th:text="${person.name}"></span>
+                        <span th:each="personCourse: ${course.personCourses}" th:if="${personCourse.person.roles.roleName == 'LECTURER'}"
+                              th:text="${personCourse.person.name}"></span>
                     </td>
                     <td>
                         <a th:href="@{/admin/viewStudents(id=${course.courseId})}" class="btn btn-warning">

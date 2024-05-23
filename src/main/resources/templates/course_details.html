@@ -50,7 +50,14 @@
                             </div>
                             <div class="product-price-btn">
                                 <p class="fee"><span th:text="${course.fees}"></span>$</p>
-                                <button type="button">Register</button>
+                                <form th:action="@{/student/register}" method="get">
+                                    <input type="hidden" name="courseId" th:value="${course.getCourseId()}"/>
+                                    <button type="submit"
+                                            th:class="${canStudentRegister ? 'btn btn-primary' : 'btn btn-danger'}"
+                                            th:text="${canStudentRegister ? 'Register' : 'Register (Disabled)'}"
+                                            th:disabled="${canStudentRegister ? false : true}">
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -61,7 +68,27 @@
                         <!-- Section to display the course name and unregister button -->
                         <div class="d-flex justify-content-around align-items-center mb-3">
                             <h3 class="h5 text-black">Course: <span th:text="${course.name}"></span></h3>
-                            <a th:href="@{/student/unregister(courseId=${course.courseId})}" class="btn btn-danger">Unregister</a>
+                            <form th:action="@{/student/unregister}" method="get" onsubmit="return confirm('Are you sure you want to unregister?');">
+                                <input type="hidden" name="courseId" th:value="${course.getCourseId()}"/>
+                                <button type="submit"
+                                        class="btn btn-danger"
+                                        th:text="${canStudentUnregister ? 'Unregister' : 'Unregister (Disabled)'}"
+                                        th:disabled="${canStudentUnregister ? false : true}">
+                                </button>
+                            </form>
+                            <form th:action="@{/courses/{courseId}(courseId=${course.courseId})}" method="post">
+                                <label for="rating" class="sr-only">Rate this course (1-5):</label>
+                                <div class="d-flex flex-row" >
+                                    <select id="rating" name="rating" class="form-control mr-2" th:disabled="${hasStudentRated}">
+                                        <option value="1" th:selected="${rating == 1}">1</option>
+                                        <option value="2" th:selected="${rating == 2}">2</option>
+                                        <option value="3" th:selected="${rating == 3}">3</option>
+                                        <option value="4" th:selected="${rating == 4}">4</option>
+                                        <option value="5" th:selected="${rating == 5}">5</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary" th:disabled="${hasStudentRated}">Rate</button>
+                                </div>
+                            </form>
                         </div>
 
                         <!-- Course Materials Section -->
@@ -81,7 +108,7 @@
                                             <td th:text="${index.index + 1}"></td>
                                             <td th:text="${material.name}"></td>
                                             <td>
-                                                <a th:href="@{/lecturer/downloadMaterial(materialId=${material.materialId})}" class="btn btn-primary">Download</a>
+                                                <a th:href="@{/courseMaterials/downloadMaterial(materialId=${material.materialId})}" class="btn btn-primary">Download</a>
                                             </td>
                                         </tr>
                                     </tbody>
