@@ -45,10 +45,10 @@
 - [x] Ndryshoni implementimin qe te dale lista me gjithe kurset qe ka krijuar admin
     - _(edhe jo kjo liste fikse). Megjithate pamja te jete e njejte (per çdo kurs te kemi nje imazh, titullin, nje
       pershkrim te shkurter (vetem 2 rreshta), numrin e leksioneve edhe ratings). 
-    - [ ] Ratings te llogaritet sipas vleresimeve qe kane bere studentet_
+    - [x] Ratings te llogaritet sipas vleresimeve qe kane bere studentet_
 - [x] Nese nje student **_klikon_** nje kurs tek i cili **nuk** eshte i regjistruar, duhet t’i dale nje faqe
   me pershkrimin e plote te kursit 
-   -  [ ] Edhe nje buton i cili nese klikohet _i dergon nje kerkese
+   -  [x] Edhe nje buton i cili nese klikohet _i dergon nje kerkese
   administratorit_ qe ky student deshiron te regjistrohet tek ky kurs.
     - _Kerkesa mund te dergohet vetem nje here._
 - [x] Nese nje student klikon nje kurs tek i cili ai _eshte i regjistruar_, atehere i del nje faqe ku
