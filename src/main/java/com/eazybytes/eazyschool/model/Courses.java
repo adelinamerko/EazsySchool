@@ -23,8 +23,8 @@ public class Courses extends BaseEntity{
 
     private String fees;
 
-    @ManyToMany(mappedBy = "courses", fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
-    private Set<Person> persons = new HashSet<>();
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<PersonCourse> personCourses = new HashSet<>();
 
     @Size(max = 8)
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
@@ -36,5 +36,4 @@ public class Courses extends BaseEntity{
     @Column(columnDefinition = "TEXT")
     @Size(max = 600)
     private String description;
-
 }

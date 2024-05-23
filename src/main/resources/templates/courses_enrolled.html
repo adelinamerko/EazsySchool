@@ -51,10 +51,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="course: ${person.courses}">
-                <td th:text="${course.courseId}"></td>
-                <td th:text="${course.name}"></td>
-                <td th:text="${course.fees}"></td>
+            <tr th:each="personCourse: ${personCourses}">
+                <td th:text="${personCourse.course.courseId}"></td>
+                <td th:text="${personCourse.course.name}"></td>
+                <td th:text="${personCourse.course.fees}"></td>
             </tr>
             </tbody>
         </table>

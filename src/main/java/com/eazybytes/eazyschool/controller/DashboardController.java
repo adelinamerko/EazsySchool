@@ -2,8 +2,12 @@ package com.eazybytes.eazyschool.controller;
 
 import com.eazybytes.eazyschool.model.Courses;
 import com.eazybytes.eazyschool.model.Person;
+import com.eazybytes.eazyschool.model.PersonCourse;
 import com.eazybytes.eazyschool.repository.CoursesRepository;
+import com.eazybytes.eazyschool.repository.PersonCourseRepository;
 import com.eazybytes.eazyschool.repository.PersonRepository;
+import com.eazybytes.eazyschool.utils.RequestType;
+import com.eazybytes.eazyschool.utils.Status;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +16,12 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -28,6 +32,9 @@ public class DashboardController {
 
     @Autowired
     CoursesRepository coursesRepository;
+
+    @Autowired
+    PersonCourseRepository personCourseRepository;
 
     @Value("${eazyschool.pageSize}")
     private int defaultPageSize;
@@ -55,38 +62,79 @@ public class DashboardController {
     public ModelAndView getCourses() {
         ModelAndView modelAndView = new ModelAndView("courses.html");
         List<Courses> courses = coursesRepository.findAll();
+        Map<Integer, Integer> courseRates = new HashMap<>(); // Map to store course ID and rate
+
         for (Courses course : courses) {
             log.error("Course Name : " + course.getName());
             log.error("Course Fees : " + course.getFees());
             log.error("Course Description : " + course.getDescription());
             log.error("Course Image Path : " + course.getCourseImagePath());
+
+            // Assuming getRateForCourse returns the rate for the given course ID
+            Integer rate = personCourseRepository.findCourseRate(course.getCourseId());
+            courseRates.put(course.getCourseId(), rate);
         }
+
         modelAndView.addObject("courses", courses);
+        modelAndView.addObject("courseRates", courseRates);
         return modelAndView;
     }
 
     @GetMapping("/courses/{courseId}")
     public ModelAndView getCourseById(@PathVariable Integer courseId, HttpSession session) {
         boolean isStudentRegistered = false;
+        boolean hasStudentRated = false;
+        boolean canStudentUnregister = false;
+        boolean canStudentRegister = false;
+
         Person person = (Person) session.getAttribute("loggedInPerson");
-        Courses personCourse = coursesRepository.findCourseForPerson(person.getPersonId(), courseId);
+        PersonCourse personCourse = personCourseRepository.findByPersonPersonIdAndCourseCourseId(person.getPersonId(), courseId);
+        Integer rating = personCourseRepository.findCourseRate(courseId);
         if (personCourse != null) {
-            isStudentRegistered = true;
+            isStudentRegistered = personCourse.getStatus() == Status.REGISTERED || personCourse.getStatus() == Status.PENDING_UNREGISTRATION;
+            hasStudentRated = personCourse.getRating() > 0;
+            canStudentUnregister = (personCourse.getStatus() == Status.REGISTERED && personCourse.getRequestType() != RequestType.UNREGISTER) ;
+            canStudentRegister = (personCourse.getStatus() == null ||  personCourse.getStatus() == Status.UNREGISTERED) && personCourse.getRequestType() != RequestType.REGISTER;
         }
         ModelAndView modelAndView = new ModelAndView("course_details.html");
         modelAndView.addObject("isStudentRegistered", isStudentRegistered);
+        modelAndView.addObject("hasStudentRated", hasStudentRated);
+        modelAndView.addObject("canStudentUnregister", canStudentUnregister);
+        modelAndView.addObject("canStudentRegister", canStudentRegister);
         Courses course = coursesRepository.findByCourseId(courseId);
         if (course == null) {
             modelAndView.addObject("errorMessage", "Course not found");
             return modelAndView;
         }
         modelAndView.addObject("course", course);
+        if (rating != null) {
+            modelAndView.addObject("rating", rating);
+        } else {
+            modelAndView.addObject("rating", 0);
+        }
+        log.error("Rating : " + rating);
         log.error("Course Name : " + course.getName());
         log.error("Course Fees : " + course.getFees());
         log.error("Course Description : " + course.getDescription());
         log.error("Course Image Path : " + course.getCourseImagePath());
         log.error("IsStudentRegistered : " + isStudentRegistered);
+        log.error("CourseId : " + course.getCourseId());
         return modelAndView;
+    }
+
+    @PostMapping("/courses/{courseId}")
+    public String updateCourseRating(@PathVariable int courseId, @RequestParam("rating") int rating, HttpSession session) {
+        Person loggedInPerson = (Person) session.getAttribute("loggedInPerson");
+        // Update the rating for the course and the logged-in person
+        log.info("Updating rating for personId : " + loggedInPerson.getPersonId() + " and courseId : " + courseId + " with rating : " + rating);
+        PersonCourse personCourse = personCourseRepository.findByPersonPersonIdAndCourseCourseId(loggedInPerson.getPersonId(), courseId);
+        if (personCourse != null) {
+            personCourse.setRating(rating);
+            personCourseRepository.save(personCourse);
+        } else {
+            log.error("PersonCourse not found for personId : " + loggedInPerson.getPersonId() + " and courseId : " + courseId);
+        }
+        return "redirect:/courses/" + courseId;
     }
 
     private void logMessages() {

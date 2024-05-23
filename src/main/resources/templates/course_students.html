@@ -82,11 +82,11 @@
       </tr>
       </thead>
       <tbody>
-        <tr th:each="person: ${courses.persons}" th:if="${person.roles.roleName == 'STUDENT'}">
-          <td th:text="${person.name}"></td>
-          <td th:text="${person.email}"></td>
-          <td th:text="${person.mobileNumber}"></td>
-          <td><a th:href="@{/admin/deleteStudentFromCourse(personId=${person.personId})}" class="btn btn-warning">DELETE</a></td>
+        <tr th:each="personCourses: ${courses.personCourses}" th:if="${personCourses.person.roles.roleName == 'STUDENT'}">
+          <td th:text="${personCourses.person.name}"></td>
+          <td th:text="${personCourses.person.email}"></td>
+          <td th:text="${personCourses.person.mobileNumber}"></td>
+          <td><a th:href="@{/admin/deleteStudentFromCourse(personId=${personCourses.person.personId})}" class="btn btn-warning">DELETE</a></td>
         </tr>
       </tbody>
     </table>
