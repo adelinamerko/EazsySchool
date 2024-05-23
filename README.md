@@ -53,13 +53,13 @@
     - _Kerkesa mund te dergohet vetem nje here._
 - [x] Nese nje student klikon nje kurs tek i cili ai _eshte i regjistruar_, atehere i del nje faqe ku
   _tregohet_ qe studenti eshte i _regjistruar_ 
-  - [ ] Tek ky kurs edhe nje buton i cili nese klikohet i _dergon nje kerkese administratorit_ qe ky student deshiron te **fshije** regjistrimin tek ky
+  - [x] Tek ky kurs edhe nje buton i cili nese klikohet i _dergon nje kerkese administratorit_ qe ky student deshiron te **fshije** regjistrimin tek ky
   kurs
-  - [ ] _Kerkesa mund te dergohet vetem nje here_
+  - [x] _Kerkesa mund te dergohet vetem nje here_
 - [x] Gjithashtu studentit i **shfaqen** gjithe materialet qe pedagogu ka vendosur per
   ate kurs.
-- [ ] Studenti mund t’i **shkarkoje** keto materiale.
-- [ ] Ne fillim te faqes ka nje seksion ku studenti mund te beje nje veleresim per
+- [x] Studenti mund t’i **shkarkoje** keto materiale.
+- [x] Ne fillim te faqes ka nje seksion ku studenti mund te beje nje veleresim per
   kursin `(1 - 5)`. Studenti mund te beje **_vetem nje here_** vleresimin e tij _(nese
   vleresimi eshte bere, vleresimi shfaqet por nuk mund te editohet)_
 
