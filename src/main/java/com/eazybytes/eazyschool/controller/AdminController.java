@@ -2,14 +2,9 @@ package com.eazybytes.eazyschool.controller;
 
 import com.eazybytes.eazyschool.constants.EazySchoolConstants;
 import com.eazybytes.eazyschool.model.*;
-import com.eazybytes.eazyschool.repository.CoursesRepository;
-import com.eazybytes.eazyschool.repository.EazyClassRepository;
-import com.eazybytes.eazyschool.repository.PersonCourseRepository;
-import com.eazybytes.eazyschool.repository.PersonRepository;
-import com.eazybytes.eazyschool.service.PersonService;
-import com.eazybytes.eazyschool.utils.RequestType;
-import com.eazybytes.eazyschool.utils.Status;
-import com.eazybytes.eazyschool.utils.Utilities;
+import com.eazybytes.eazyschool.repository.*;
+import com.eazybytes.eazyschool.service.*;
+import com.eazybytes.eazyschool.utils.*;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +40,9 @@ public class AdminController {
 
     @Autowired
     PersonCourseRepository personCourseRepository;
+
+    @Autowired
+    PersonCourseService personCourseService;
 
     @RequestMapping("/displayClasses")
     public ModelAndView displayClasses(Model model) {
@@ -229,6 +227,28 @@ public class AdminController {
     public String displayRegisterPage(Model model) {
         model.addAttribute("person", new Person());
         return "register.html";
+    }
+
+    @GetMapping("/displayRequests")
+    public ModelAndView displayRequests() {
+        ModelAndView modelAndView = new ModelAndView("requests.html");
+        List<PersonCourse> courseRequests = personCourseService.getAllCourseRequests();
+        modelAndView.addObject("courseRequests", courseRequests);
+        return modelAndView;
+    }
+
+    @GetMapping("/approveRegistration")
+    public String approveRegistration(@RequestParam("personId") int personId,
+                                      @RequestParam("courseId") int courseId) {
+        personCourseService.updateStatusAndRequestType(courseId, personId, RequestType.NONE, Status.REGISTERED);
+        return "redirect:/admin/displayRequests";
+    }
+
+    @GetMapping("/approveUnregistration")
+    public String approveUnregistration(@RequestParam("personId") int personId,
+                                        @RequestParam("courseId") int courseId) {
+        personCourseService.updateStatusAndRequestType(courseId, personId, RequestType.NONE, Status.UNREGISTERED);
+        return "redirect:/admin/displayRequests";
     }
 
     @PostMapping("/createLecturer")
