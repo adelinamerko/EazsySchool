@@ -16,5 +16,8 @@ public interface PersonCourseRepository extends JpaRepository<PersonCourse, Pers
     @Query(value = "SELECT AVG(pc.rating) AS average_rating FROM person_courses pc WHERE pc.course_id = :courseId AND pc.rating > 0;", nativeQuery = true)
     Integer findCourseRate(int courseId);
 
+    @Query(value = "SELECT pc FROM PersonCourse pc WHERE (pc.status = 'PENDING_REGISTRATION' OR pc.status = 'PENDING_UNREGISTRATION') AND (pc.requestType IS NOT NULL AND pc.requestType != 'NONE')")
+    List<PersonCourse> findAllRequests();
+
     PersonCourse findByPersonPersonIdAndCourseCourseId(int personId, int courseId);
 }
