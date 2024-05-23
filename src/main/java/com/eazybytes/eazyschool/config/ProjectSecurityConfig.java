@@ -23,6 +23,8 @@ public class ProjectSecurityConfig {
                         .requestMatchers("/lecturer/**").hasRole("LECTURER")
                         .requestMatchers("/course-materials/**").hasRole("LECTURER")
                         .requestMatchers("/student/**").hasRole("STUDENT")
+                        .requestMatchers("/courseMaterials/downloadMaterial").hasAnyRole("LECTURER", "STUDENT")
+                        .requestMatchers("/courseMaterials/**").hasRole("LECTURER")
                         .requestMatchers("/api/**").authenticated()
                         .requestMatchers("/data-api/**").authenticated()
                         .requestMatchers("/displayProfile").authenticated()

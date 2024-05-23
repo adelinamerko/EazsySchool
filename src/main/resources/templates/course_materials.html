@@ -62,7 +62,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form th:action="@{/lecturer/addMaterialToCourse(courseId=${course.courseId})}" method="post" class="signin-form" enctype="multipart/form-data">
+          <form th:action="@{/courseMaterials/addMaterialToCourse(courseId=${course.courseId})}" method="post" class="signin-form" enctype="multipart/form-data">
             <div class="modal-body">
               <div class="input-grids">
                 <label class="control-label" for="file">Upload Material</label>
@@ -89,8 +89,8 @@
           <td th:text="${index.index + 1}"></td> <!-- Index starts from 0, so adding 1 to it -->
           <td th:text="${material.name}"></td>
           <td>
-            <a th:href="@{/lecturer/downloadMaterial(materialId=${material.materialId})}" class="btn btn-primary">Download</a>
-            <a th:href="@{/lecturer/deleteMaterialFromCourse(materialId=${material.materialId})}" class="btn btn-warning">Delete</a>
+            <a th:href="@{/courseMaterials/downloadMaterial(materialId=${material.materialId})}" class="btn btn-primary">Download</a>
+            <a th:href="@{/courseMaterials/deleteMaterialFromCourse(materialId=${material.materialId})}" class="btn btn-warning">Delete</a>
           </td>
         </tr>
       </tbody>

@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import com.eazybytes.eazyschool.service.CourseMaterialService;
 
 @RestController
-@RequestMapping("/lecturer")
-public class LecturerRestController {
+@RequestMapping("/courseMaterials")
+public class CourseMaterialsRestController {
     private final CourseMaterialService courseMaterialService;
 
-    public LecturerRestController(CourseMaterialService courseMaterialService) {
+    public CourseMaterialsRestController(CourseMaterialService courseMaterialService) {
         this.courseMaterialService = courseMaterialService;
     }
 
