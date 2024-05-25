@@ -5,6 +5,7 @@ import com.eazybytes.eazyschool.model.Courses;
 import com.eazybytes.eazyschool.repository.CourseMaterialRepository;
 import com.eazybytes.eazyschool.repository.CoursesRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
+@Slf4j
 @Service
 public class CourseMaterialService {
     private final int SIZE_10_MB = 10 * 1024 * 1024 * 9999999;
@@ -50,8 +52,13 @@ public class CourseMaterialService {
             throw new IllegalArgumentException("File size exceeds 10MB limit");
         }
 
+        // replace characters in the course name that are not alphanumeric (letters or numbers) or hyphens or underscores with underscores.
+        String sanitizedCourseName = course.getName().replaceAll("[^a-zA-Z0-9-_]", "_");
+
         // Create directory for course materials if not exist
-        Path courseDir = Paths.get("./src/main/resources/static/course-materials/" + course.getName());
+        Path courseDir = Paths.get("./src/main/resources/static/course-materials/" + sanitizedCourseName);
+        log.error("Course directory: " + courseDir.toString());
+
         if (!Files.exists(courseDir)) {
             Files.createDirectories(courseDir);
         }
@@ -67,7 +74,7 @@ public class CourseMaterialService {
         // Create CourseMaterial entity and save it
         CourseMaterial courseMaterial = new CourseMaterial();
         courseMaterial.setName(fileName);
-        courseMaterial.setFilePath("course-materials/" + course.getName() + "/" + fileName);
+        courseMaterial.setFilePath("course-materials/" + sanitizedCourseName + "/" + fileName);
         courseMaterial.setCourse(course);
 
         courseMaterialRepository.save(courseMaterial);
