@@ -195,7 +195,7 @@ public class AdminController {
             return modelAndView;
         }
         // Create and save the PersonCourse entity to establish the relationship
-        PersonCourse personCourse = new PersonCourse(new PersonCourseId(personEntity, courses), Status.REGISTERED);
+        PersonCourse personCourse = new PersonCourse(new PersonCourseId(personEntity, courses), Status.REGISTERED, RequestType.NONE);
 
         personCourseRepository.save(personCourse);
 
@@ -205,7 +205,7 @@ public class AdminController {
     }
 
     @GetMapping("/deleteStudentFromCourse")
-    public ModelAndView deleteStudentFromCourse(Model model, @RequestParam int personId, HttpSession session) {
+    public ModelAndView deleteStudentFromCourse(@RequestParam int personId, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView();
         Courses courses = (Courses) session.getAttribute("courses");
         Person person = personRepository.findById(personId).orElse(null);
@@ -215,8 +215,10 @@ public class AdminController {
             PersonCourseId personCourseId = new PersonCourseId(person, courses);
             Optional<PersonCourse> personCourse = personCourseRepository.findById(personCourseId);
 
-            // Delete the PersonCourse entry to remove the relationship
-            personCourse.ifPresent(course -> personCourseRepository.delete(course));
+/*            // Delete the PersonCourse entry to remove the relationship
+            personCourse.ifPresent(course -> personCourseRepository.delete(course));*/
+            // Update the status and request type
+            personCourse.ifPresent(course -> personCourseService.updateStatusAndRequestType(courses.getCourseId(), personId, RequestType.NONE, Status.UNREGISTERED));
         }
 
         modelAndView.setViewName("redirect:/admin/viewStudents?id=" + courses.getCourseId());
@@ -254,7 +256,7 @@ public class AdminController {
     @PostMapping("/createLecturer")
     public String createLecturer(@Valid @ModelAttribute("person") Person person, Errors errors,
                                  @RequestParam("profileImageFile") MultipartFile file,
-                                 @RequestParam(value = "role", defaultValue = EazySchoolConstants.STUDENT_ROLE) String role) {
+                                 @RequestParam(value = "role", defaultValue = EazySchoolConstants.LECTURER_ROLE) String role) {
         if (errors.hasErrors()) {
             return "register.html";
         }

@@ -82,7 +82,7 @@
       </tr>
       </thead>
       <tbody>
-        <tr th:each="personCourses: ${courses.personCourses}" th:if="${personCourses.person.roles.roleName == 'STUDENT'}">
+        <tr th:each="personCourses: ${courses.personCourses}" th:if="${personCourses.person.roles.roleName == 'STUDENT' && (personCourses.getStatus() == T(com.eazybytes.eazyschool.utils.Status).REGISTERED || personCourses.getStatus() == T(com.eazybytes.eazyschool.utils.Status).PENDING_UNREGISTRATION)}">
           <td th:text="${personCourses.person.name}"></td>
           <td th:text="${personCourses.person.email}"></td>
           <td th:text="${personCourses.person.mobileNumber}"></td>

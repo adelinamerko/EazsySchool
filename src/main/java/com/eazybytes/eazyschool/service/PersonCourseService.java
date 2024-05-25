@@ -22,6 +22,14 @@ public class PersonCourseService {
         return personCourseRepository.findAllRequests();
     }
 
+    public PersonCourse findByPersonIdAndCourseId(int personId, int courseId) {
+        return personCourseRepository.findByPersonPersonIdAndCourseCourseId(personId, courseId);
+    }
+
+    public void savePersonCourse(PersonCourse personCourse) {
+        personCourseRepository.save(personCourse);
+    }
+
     @Transactional
     public void updateStatusAndRequestType(int courseId, int personId, RequestType requestType, Status status) {
         PersonCourse personCourse = personCourseRepository.findByPersonPersonIdAndCourseCourseId(personId, courseId);

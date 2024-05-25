@@ -70,7 +70,6 @@ public class DashboardController {
             log.error("Course Description : " + course.getDescription());
             log.error("Course Image Path : " + course.getCourseImagePath());
 
-            // Assuming getRateForCourse returns the rate for the given course ID
             Integer rate = personCourseRepository.findCourseRate(course.getCourseId());
             courseRates.put(course.getCourseId(), rate);
         }
@@ -85,11 +84,12 @@ public class DashboardController {
         boolean isStudentRegistered = false;
         boolean hasStudentRated = false;
         boolean canStudentUnregister = false;
-        boolean canStudentRegister = false;
+        boolean canStudentRegister = true;
 
         Person person = (Person) session.getAttribute("loggedInPerson");
         PersonCourse personCourse = personCourseRepository.findByPersonPersonIdAndCourseCourseId(person.getPersonId(), courseId);
         Integer rating = personCourseRepository.findCourseRate(courseId);
+
         if (personCourse != null) {
             isStudentRegistered = personCourse.getStatus() == Status.REGISTERED || personCourse.getStatus() == Status.PENDING_UNREGISTRATION;
             hasStudentRated = personCourse.getRating() > 0;
@@ -101,6 +101,7 @@ public class DashboardController {
         modelAndView.addObject("hasStudentRated", hasStudentRated);
         modelAndView.addObject("canStudentUnregister", canStudentUnregister);
         modelAndView.addObject("canStudentRegister", canStudentRegister);
+
         Courses course = coursesRepository.findByCourseId(courseId);
         if (course == null) {
             modelAndView.addObject("errorMessage", "Course not found");
@@ -112,13 +113,6 @@ public class DashboardController {
         } else {
             modelAndView.addObject("rating", 0);
         }
-        log.error("Rating : " + rating);
-        log.error("Course Name : " + course.getName());
-        log.error("Course Fees : " + course.getFees());
-        log.error("Course Description : " + course.getDescription());
-        log.error("Course Image Path : " + course.getCourseImagePath());
-        log.error("IsStudentRegistered : " + isStudentRegistered);
-        log.error("CourseId : " + course.getCourseId());
         return modelAndView;
     }
 
