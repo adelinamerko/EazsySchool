@@ -28,8 +28,6 @@ public class StudentController {
         List<PersonCourse> personCourses = personCourseRepository.findByPersonPersonId(person.getPersonId());
         ModelAndView modelAndView = new ModelAndView("courses_enrolled.html");
         modelAndView.addObject("person",person);
-        log.error("Person:" + person.getName());
-        log.error("Person:" + person.getPersonId());
         modelAndView.addObject("personCourses",personCourses);
         return modelAndView;
     }

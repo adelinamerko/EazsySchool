@@ -54,7 +54,7 @@
                                     <input type="hidden" name="courseId" th:value="${course.getCourseId()}"/>
                                     <button type="submit"
                                             th:class="${canStudentRegister ? 'btn btn-primary' : 'btn btn-danger'}"
-                                            th:text="${canStudentRegister ? 'Register' : 'Register (Disabled)'}"
+                                            th:text="${canStudentRegister ? 'Register' : 'Pending Registration'}"
                                             th:disabled="${canStudentRegister ? false : true}">
                                     </button>
                                 </form>
@@ -72,7 +72,7 @@
                                 <input type="hidden" name="courseId" th:value="${course.getCourseId()}"/>
                                 <button type="submit"
                                         class="btn btn-danger"
-                                        th:text="${canStudentUnregister ? 'Unregister' : 'Unregister (Disabled)'}"
+                                        th:text="${canStudentUnregister ? 'Unregister' : 'Pending Unregistration'}"
                                         th:disabled="${canStudentUnregister ? false : true}">
                                 </button>
                             </form>

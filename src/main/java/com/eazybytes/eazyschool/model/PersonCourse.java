@@ -36,10 +36,18 @@ public class PersonCourse {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public PersonCourse(PersonCourseId personCourseId, Status status) {
+    public PersonCourse(PersonCourseId personCourseId, Status status, RequestType requestType) {
         this.person = personCourseId.getPerson();
         this.course = personCourseId.getCourse();
         this.status = status;
+        this.requestType = requestType;
+    }
+
+    public PersonCourse(PersonCourseId personCourseId, RequestType requestType, Status status) {
+        this.person = personCourseId.getPerson();
+        this.course = personCourseId.getCourse();
+        this.status = status;
+        this.requestType = requestType;
     }
 
     public PersonCourse(PersonCourseId personCourseId) {
