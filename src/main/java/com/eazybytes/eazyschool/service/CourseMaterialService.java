@@ -24,14 +24,17 @@ import java.util.Objects;
 @Slf4j
 @Service
 public class CourseMaterialService {
-    private final int SIZE_10_MB = 10 * 1024 * 1024 * 9999999;
+    private final int SIZE_10_MB = 10 * 1024 * 1024;
     private final String MATERIALS_DIRECTORY = "./src/main/resources/static/";
 
-    @Autowired
-    private CoursesRepository coursesRepository;
+    private final CoursesRepository coursesRepository;
+    private final CourseMaterialRepository courseMaterialRepository;
 
     @Autowired
-    private CourseMaterialRepository courseMaterialRepository;
+    public CourseMaterialService(CoursesRepository coursesRepository, CourseMaterialRepository courseMaterialRepository) {
+        this.coursesRepository = coursesRepository;
+        this.courseMaterialRepository = courseMaterialRepository;
+    }
 
     public void addCourseMaterial(int courseId, MultipartFile file) throws IOException {
         Courses course = coursesRepository.findById(courseId)
@@ -123,7 +126,7 @@ public class CourseMaterialService {
         try {
             resource = new UrlResource(path.toUri());
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Error downloading material: {}", e.getMessage());
         }
 
 
