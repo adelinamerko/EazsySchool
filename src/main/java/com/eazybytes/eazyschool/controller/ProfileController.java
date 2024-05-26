@@ -32,12 +32,17 @@ import java.util.Objects;
 @Controller("profileControllerBean")
 public class ProfileController {
 
+    private final PersonRepository personRepository;
+
     @Autowired
-    PersonRepository personRepository;
+    public ProfileController(PersonRepository personRepository) {
+        this.personRepository = personRepository;
+    }
 
     @RequestMapping("/displayProfile")
-    public ModelAndView displayMessages(Model model, HttpSession session) {
+    public ModelAndView displayMessages(HttpSession session) {
         Person person = (Person) session.getAttribute("loggedInPerson");
+
         Profile profile = new Profile();
         profile.setName(person.getName());
         profile.setMobileNumber(person.getMobileNumber());
@@ -50,8 +55,10 @@ public class ProfileController {
             profile.setState(person.getAddress().getState());
             profile.setZipCode(person.getAddress().getZipCode());
         }
+
         ModelAndView modelAndView = new ModelAndView("profile.html");
         modelAndView.addObject("profile", profile);
+
         return modelAndView;
     }
 
@@ -80,11 +87,7 @@ public class ProfileController {
 
         if (profileImageFile != null && !profileImageFile.isEmpty()) {
             String profileImagePath = Utilities.uploadProfileImage(profileImageFile, person);
-            if (profileImagePath != null) {
-                person.setProfileImagePath(profileImagePath);
-            } else {
-                log.error("Failed to upload profile image");
-            }
+            person.setProfileImagePath(profileImagePath);
         }
 
         // Save updated person details

@@ -49,33 +49,26 @@ public class CourseMaterialsController {
     }
 
     @PostMapping("/addMaterialToCourse")
-    public String addMaterialToCourse(@RequestParam("courseId") int courseId,
-                                      @RequestParam("file") MultipartFile file,
-                                      HttpSession session) {
+    public String addMaterialToCourse(@RequestParam("courseId") int courseId, @RequestParam("file") MultipartFile file) {
         Optional<Courses> optionalCourse = coursesRepository.findById(courseId);
         if (optionalCourse.isPresent()) {
             Courses course = optionalCourse.get();
             try {
                 courseMaterialService.addCourseMaterial(course.getCourseId(), file);
             } catch (IOException e) {
-                e.printStackTrace();
-                log.error("Error occurred while uploading the file");
+                log.error("Error occurred while uploading the file: {}", e.getMessage());
             }
         }
         return "redirect:/courseMaterials/viewMaterials?id=" + courseId;
     }
 
     @GetMapping("/deleteMaterialFromCourse")
-    public String deleteMaterialFromCourse(@RequestParam("materialId") int materialId,
-                                           HttpSession session) {
+    public String deleteMaterialFromCourse(@RequestParam("materialId") int materialId, HttpSession session) {
         try {
             courseMaterialService.deleteMaterial(materialId);
         } catch (IOException e) {
-            // Handle file deletion exception
-            e.printStackTrace();
-            log.error("Error occurred while deleting the file");
+            log.error("Error occurred while deleting the file: {}", e.getMessage());
             return "redirect:/courseMaterials/viewMaterials?id=" + ((Courses) session.getAttribute("course")).getCourseId() + "&error=file-delete-error";
-
         }
         return "redirect:/courseMaterials/viewMaterials?id=" + ((Courses) session.getAttribute("course")).getCourseId();
     }

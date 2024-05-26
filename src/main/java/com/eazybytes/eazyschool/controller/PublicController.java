@@ -20,12 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("public")
 public class PublicController {
-    // Define the folder where uploaded images will be stored
+
+    private final PersonService personService;
 
     @Autowired
-    PersonService personService;
-    @Autowired
-    private HttpSession httpSession;
+    public PublicController(PersonService personService) {
+        this.personService = personService;
+    }
 
     @RequestMapping(value = "/register", method = {RequestMethod.GET})
     public String displayRegisterPage(Model model) {

@@ -29,7 +29,6 @@ public class PersonCourseController {
 
     @GetMapping("/student/unregister")
     public String unregisterCourse(@RequestParam int courseId, HttpSession session) {
-        log.error("Unregistering course with ID: " + courseId);
         Person loggedInPerson = (Person) session.getAttribute("loggedInPerson");
         personCourseService.updateStatusAndRequestType(courseId, loggedInPerson.getPersonId(), RequestType.UNREGISTER, Status.PENDING_UNREGISTRATION);
         return "redirect:/courses";
