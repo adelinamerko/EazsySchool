@@ -48,10 +48,10 @@
                         <td th:text="${request.status}"></td>
                         <td th:text="${request.rating}"></td>
                         <td>
-                            <a th:if="${request.status == T(com.eazybytes.eazyschool.utils.Status).PENDING_REGISTRATION and request.requestType == T(com.eazybytes.eazyschool.utils.RequestType).REGISTER}"
+                            <a th:if="${request.status != null and request.requestType != null and request.status == T(com.eazybytes.eazyschool.utils.Status).PENDING_REGISTRATION and request.requestType == T(com.eazybytes.eazyschool.utils.RequestType).REGISTER}"
                                th:href="@{/admin/approveRegistration(personId=${request.person.personId}, courseId=${request.course.courseId})}"
                                class="btn btn-success">Approve Registration</a>
-                            <a th:if="${request.status == T(com.eazybytes.eazyschool.utils.Status).PENDING_UNREGISTRATION and request.requestType == T(com.eazybytes.eazyschool.utils.RequestType).UNREGISTER}"
+                            <a th:if="${request.status != null and request.requestType != null and request.status == T(com.eazybytes.eazyschool.utils.Status).PENDING_UNREGISTRATION and request.requestType == T(com.eazybytes.eazyschool.utils.RequestType).UNREGISTER}"
                                th:href="@{/admin/approveUnregistration(personId=${request.person.personId}, courseId=${request.course.courseId})}"
                                class="btn btn-danger">Approve Unregistration</a>
                         </td>
