@@ -19,14 +19,14 @@ public class Utilities {
     private static final String COURSE_IMAGE_DIR = "./src/main/resources/static/assets/images/course-images/";
 
     public static String uploadProfileImage(MultipartFile file, Person person) {
-        return uploadImage(file, person, USER_PROFILE_IMAGE_DIR, "profile image");
+        return uploadImage(file, person, USER_PROFILE_IMAGE_DIR);
     }
 
     public static String uploadCourseImage(MultipartFile file, Courses course) {
-        return uploadImage(file, course, COURSE_IMAGE_DIR, "course image");
+        return uploadImage(file, course, COURSE_IMAGE_DIR);
     }
 
-    private static String uploadImage(MultipartFile file, Object entity, String uploadDir, String entityType) {
+    private static String uploadImage(MultipartFile file, Object entity, String uploadDir) {
         String uniqueFileName = generateUniqueFileName(file.getOriginalFilename());
         Path filePath = createDirectoryAndResolveFilePath(uploadDir, uniqueFileName);
         try {
@@ -34,7 +34,7 @@ public class Utilities {
             deleteExistingImage(entity);
             return getRelativeImagePath(uploadDir, uniqueFileName);
         } catch (IOException e) {
-            log.error("Failed to upload {} for {}: {}", entityType, entity, e.getMessage());
+            log.error("Failed to upload {} for {}: {}", entity instanceof Person ? "profile image" : entity instanceof Courses ? "course image" : "unknown image", entity, e.getMessage());
             return "";
         }
     }
@@ -53,14 +53,12 @@ public class Utilities {
     }
 
     private static void deleteExistingImage(Object entity) throws IOException {
-        if (entity instanceof Person) {
-            Person person = (Person) entity;
+        if (entity instanceof Person person) {
             if (person.getProfileImagePath()!= null &&!person.getProfileImagePath().isEmpty()) {
                 Path previousImagePath = Paths.get("./src/main/resources/static/" + person.getProfileImagePath());
                 Files.deleteIfExists(previousImagePath);
             }
-        } else if (entity instanceof Courses) {
-            Courses course = (Courses) entity;
+        } else if (entity instanceof Courses course) {
             if (course.getCourseImagePath()!= null &&!course.getCourseImagePath().isEmpty()) {
                 Path previousImagePath = Paths.get("./src/main/resources/static/" + course.getCourseImagePath());
                 Files.deleteIfExists(previousImagePath);

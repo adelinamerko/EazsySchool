@@ -18,8 +18,11 @@ import java.util.List;
 @Controller
 @RequestMapping("student")
 public class StudentController {
-    @Autowired
-    PersonCourseRepository personCourseRepository;
+    private final PersonCourseRepository personCourseRepository;
+
+    public StudentController(PersonCourseRepository personCourseRepository) {
+        this.personCourseRepository = personCourseRepository;
+    }
 
     @GetMapping("/displayCourses")
     public ModelAndView displayCourses(Model model, HttpSession session)

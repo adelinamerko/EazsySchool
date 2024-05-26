@@ -26,24 +26,16 @@ import java.util.Map;
 @Slf4j
 @Controller
 public class DashboardController {
+    private final PersonRepository personRepository;
+    private final CoursesRepository coursesRepository;
+    private final PersonCourseRepository personCourseRepository;
 
     @Autowired
-    PersonRepository personRepository;
-
-    @Autowired
-    CoursesRepository coursesRepository;
-
-    @Autowired
-    PersonCourseRepository personCourseRepository;
-
-    @Value("${eazyschool.pageSize}")
-    private int defaultPageSize;
-
-    @Value("${eazyschool.contact.successMsg}")
-    private String message;
-
-    @Autowired
-    Environment environment;
+    public DashboardController(PersonRepository personRepository, CoursesRepository coursesRepository, PersonCourseRepository personCourseRepository) {
+        this.personRepository = personRepository;
+        this.coursesRepository = coursesRepository;
+        this.personCourseRepository = personCourseRepository;
+    }
 
     @RequestMapping("/dashboard")
     public String displayDashboard(Model model,Authentication authentication, HttpSession session) {
@@ -54,7 +46,6 @@ public class DashboardController {
             model.addAttribute("enrolledClass", person.getEazyClass().getName());
         }
         session.setAttribute("loggedInPerson", person);
-        logMessages();
         return "dashboard.html";
     }
 
@@ -65,11 +56,6 @@ public class DashboardController {
         Map<Integer, Integer> courseRates = new HashMap<>(); // Map to store course ID and rate
 
         for (Courses course : courses) {
-            log.error("Course Name : " + course.getName());
-            log.error("Course Fees : " + course.getFees());
-            log.error("Course Description : " + course.getDescription());
-            log.error("Course Image Path : " + course.getCourseImagePath());
-
             Integer rate = personCourseRepository.findCourseRate(course.getCourseId());
             courseRates.put(course.getCourseId(), rate);
         }
@@ -129,21 +115,6 @@ public class DashboardController {
             log.error("PersonCourse not found for personId : " + loggedInPerson.getPersonId() + " and courseId : " + courseId);
         }
         return "redirect:/courses/" + courseId;
-    }
-
-    private void logMessages() {
-        log.error("Error message from the Dashboard page");
-        log.warn("Warning message from the Dashboard page");
-        log.info("Info message from the Dashboard page");
-        log.debug("Debug message from the Dashboard page");
-        log.trace("Trace message from the Dashboard page");
-
-        log.error("defaultPageSize value with @Value annotation is : "+defaultPageSize);
-        log.error("successMsg value with @Value annotation is : "+message);
-
-        log.error("defaultPageSize value with Environment is : "+environment.getProperty("eazyschool.pageSize"));
-        log.error("successMsg value with Environment is : "+environment.getProperty("eazyschool.contact.successMsg"));
-        log.error("Java Home environment variable using Environment is : "+environment.getProperty("JAVA_HOME"));
     }
 
 }
