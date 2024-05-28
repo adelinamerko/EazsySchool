@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Eazy School
 
 ## Project tasks
@@ -69,3 +70,6 @@
 
 - [x] Administratori te kete nje buton tjeter `Requests`, ku t’i shfaqen gjithe kerkesat e
   studenteve per regjistrime ne kurse ose fshirje regjistrimesh.
+=======
+# EazsySchool
+>>>>>>> origin/main

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manage Lecturers</title>
+    <link rel="stylesheet" href="/assets/css/style-starter.css">
+</head>
+<body>
+    <h1>Manage Lecturers</h1>
+    <div class="table-responsive-md" style="max-height: 500px; overflow-y: auto;">
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Lecturer Name</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="lecturer : ${lecturers}">
+                    <td th:text="${lecturer.name}"></td>
+                    <td>
+                        <button class="btn btn-danger" onclick="showDeleteOptionsModal(${lecturer.id})">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal for delete options -->
+    <div id="deleteOptionsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeDeleteOptionsModal()">&times;</span>
+            <h2>Delete Lecturer Options</h2>
+            <form th:action="@{/admin/deleteLecturer}" method="post">
+                <input type="hidden" id="lecturerId" name="lecturerId" />
+                <label for="newLecturerId">Reassign courses to:</label>
+                <select name="newLecturerId" id="newLecturerId">
+                    <option th:each="lecturer : ${otherLecturers}" th:value="${lecturer.id}" th:text="${lecturer.name}"></option>
+                </select>
+                <button type="submit" class="btn btn-success">Reassign and Delete</button>
+            </form>
+            <form th:action="@{/admin/deleteLecturer}" method="post">
+                <input type="hidden" id="lecturerIdToDelete" name="lecturerId" />
+                <button type="submit" class="btn btn-danger">Delete Lecturer and Courses</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showDeleteOptionsModal(lecturerId) {
+            document.getElementById('lecturerId').value = lecturerId;
+            document.getElementById('lecturerIdToDelete').value = lecturerId;
+            document.getElementById('deleteOptionsModal').style.display = 'block';
+        }
+
+        function closeDeleteOptionsModal() {
+            document.getElementById('deleteOptionsModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

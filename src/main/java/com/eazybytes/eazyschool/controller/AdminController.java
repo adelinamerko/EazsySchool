@@ -224,7 +224,6 @@ public class AdminController {
         personCourseService.updateStatusAndRequestType(courseId, personId, RequestType.NONE, Status.UNREGISTERED);
         return "redirect:/admin/displayRequests";
     }
-
     @PostMapping("/createLecturer")
     public String createLecturer(@Valid @ModelAttribute("person") Person person, Errors errors, @RequestParam("profileImageFile") MultipartFile file) {
         if (errors.hasErrors()) {
@@ -234,15 +233,18 @@ public class AdminController {
             String profileImagePath = Utilities.uploadProfileImage(file, person);
             person.setProfileImagePath(profileImagePath);
         }
-
         boolean isSaved = personService.createNewPerson(person, EazySchoolConstants.LECTURER_ROLE);
-
         if (isSaved) {
             return "redirect:/dashboard";
         } else {
             return "register.html";
         }
     }
-
-
+    @GetMapping("/admin/manageLecturers")
+    public ModelAndView manageLecturers(Model model) {
+        ModelAndView modelAndView = new ModelAndView("lecture.html");
+        List<Person> lecturers = personService.getAllLecturers();
+        modelAndView.addObject("lecturers", lecturers);
+        return modelAndView;
+    }
 }

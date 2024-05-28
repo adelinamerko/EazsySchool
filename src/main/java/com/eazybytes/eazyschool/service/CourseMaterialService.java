@@ -134,7 +134,6 @@ public class CourseMaterialService {
             throw new RuntimeException("Material file not found or cannot be read");
         }
 
-
         return resource;
     }
 }
